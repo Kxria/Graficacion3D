@@ -3,6 +3,10 @@
 #include "../math/vectores.h"
 #include "../color/colores.h"
 
+typedef struct caras_indices {
+    int a, b, c;
+}Cara_t;
+
 typedef enum _tipos_fig {
     LINEA = 2 << 0,
     CURVA = 2 << 1,
@@ -30,10 +34,6 @@ typedef struct  _circulo {
 }Circulo;
 
 typedef struct _triangulo {
-    // Vec2 p1;
-    // Vec2 p2;
-    // Vec2 p3;
-
     Vec2 p[3];
     
     Color color;
