@@ -4,7 +4,7 @@
 #include <SDL3/SDL.h>
 #include "color/colores.h"
 #include "draw/figuras.h"
-// #include "HUD/boton.h"
+#include "Estructuras/mesh.h"
 
 typedef struct _estado {
     uint32_t *color_buffer;
@@ -15,7 +15,7 @@ typedef struct _estado {
     int w_height;
     Color clear_color;
     int run;
-    Figuras *figuras_buffer;
+    Mesh *meshes;
 }EstadoRender;
 
 extern EstadoRender estadosrender;

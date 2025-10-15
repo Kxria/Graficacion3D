@@ -62,7 +62,7 @@ void render_init(void) {
     SDL_CreateWindowAndRenderer("Window", 
                                 estadosrender.w_width, 
                                 estadosrender.w_height, 
-                                SDL_WINDOW_OPENGL, 
+                                SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE, 
                                 &window, 
                                 &estadosrender.renderer);
 
@@ -81,7 +81,8 @@ void render_init(void) {
 }
 
 void render_clean(void) {
-    free(estadosrender.figuras_buffer);
+    // free(estadosrender.figuras_buffer);
+    free_array(estadosrender.meshes);
     SDL_DestroyTexture(estadosrender.texture);
     SDL_DestroyRenderer(estadosrender.renderer);
     SDL_DestroyWindow(window);

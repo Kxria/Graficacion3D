@@ -7,7 +7,7 @@ EstadoRender estadosrender = {
     .texture = 0,
     .w_width = 1080,
     .w_height = 720,
-    .clear_color = {0xFFFFFFFF},
+    .clear_color = {0x000000FF},
     .run = 1,
-    .figuras_buffer = 0
+    .meshes = 0
 };
