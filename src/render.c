@@ -94,9 +94,9 @@ Vec2* pivote_mas_cerca(Vec2 mp, Figuras *figs, float umbral) {
 
 void update() {
     // modificar valores
-    estadosrender.meshes[0].rotacion.unpack.x += 0.00f;
+    estadosrender.meshes[0].rotacion.unpack.x += 0.001f;
     estadosrender.meshes[0].rotacion.unpack.y += 0.001f;
-    estadosrender.meshes[0].rotacion.unpack.z += 0.00f;
+    estadosrender.meshes[0].rotacion.unpack.z += 0.001f;
     transformar();
 
 }
@@ -136,9 +136,9 @@ void _Init() {
 
     pushto_array(estadosrender.meshes, cubo);
 
-    estadosrender.meshes[0].rotacion.unpack.x = 0.01f;
-    estadosrender.meshes[0].rotacion.unpack.y = 0.01f;
-    estadosrender.meshes[0].rotacion.unpack.z = 0.01f;
+    estadosrender.meshes[0].rotacion.unpack.x = 0.f;
+    estadosrender.meshes[0].rotacion.unpack.y = 0.f;
+    estadosrender.meshes[0].rotacion.unpack.z = 0.f;
 
     estadosrender.meshes[0].escala.unpack.x = 1.f;
     estadosrender.meshes[0].escala.unpack.y = 1.f;
