@@ -36,8 +36,8 @@ void rellenar_figura(void *figura, uint32_t color) {
         }
 
         case TRIAN: {
-            Triangulo *triangulo = (Triangulo*)DUMMY;
-            fill_triangulo(triangulo, color);
+            // Triangulo *triangulo = (Triangulo*)DUMMY;
+            // fill_triangulo(triangulo, color);
             break;
         }
 
@@ -123,28 +123,27 @@ uint32_t getColor(Vec2 *pixel) {
 
 // ---------------------- FUNCIONES ORG ---------------------- //
 
-void fill_triangulo(Triangulo *triangulo, uint32_t color) {
-    float cy, cx;
+// void fill_triangulo(Triangulo *triangulo, uint32_t color) {
+//     float cy, cx;
 
-    Vec2 y[3] = {triangulo -> p[0], triangulo -> p[1], triangulo -> p[2]};
-    ordenar_y(y);
+//     Vec2 y[3] = {triangulo -> p[0], triangulo -> p[1], triangulo -> p[2]};
+//     ordenar_y(y);
 
-    if (y[1].unpack.y == y[2].unpack.y) {
-        fill_flat_bottom(y[0], y[1], y[2], color);
-    } else if (y[0].unpack.y == y[1].unpack.y) {
-        fill_flat_top(y[0], y[1], y[2], color);
-    } else {
-        cy = y[1].unpack.y;
-        cx = (y[1].unpack.y - y[0].unpack.y) * (y[2].unpack.x - y[0].unpack.x) / (y[2].unpack.y - y[0].unpack.y) + y[0].unpack.x;
+//     if (y[1].unpack.y == y[2].unpack.y) {
+//         fill_flat_bottom(y[0], y[1], y[2], color);
+//     } else if (y[0].unpack.y == y[1].unpack.y) {
+//         fill_flat_top(y[0], y[1], y[2], color);
+//     } else {
+//         cy = y[1].unpack.y;
+//         cx = (y[1].unpack.y - y[0].unpack.y) * (y[2].unpack.x - y[0].unpack.x) / (y[2].unpack.y - y[0].unpack.y) + y[0].unpack.x;
 
-        Vec2 v = {{cx, cy}};
-        fill_flat_bottom(y[0], y[1], v, color);
-        fill_flat_top(v, y[1], y[2], color);
-    }
+//         Vec2 v = {{cx, cy}};
+//         fill_flat_bottom(y[0], y[1], v, color);
+//         fill_flat_top(v, y[1], y[2], color);
+//     }
+// }
 
-}
-
-void fill_flat_bottom(Vec2 p2, Vec2 p3, Vec2 c, uint32_t color) {
+void fill_flat_bottom(Vec3 p2, Vec3 p3, Vec3 c, uint32_t color) {
     float mi = (p3.unpack.x - p2.unpack.x) / (p3.unpack.y - p2.unpack.y);
     float mf = (c.unpack.x - p2.unpack.x) / (c.unpack.y - p2.unpack.y);
 
@@ -158,7 +157,7 @@ void fill_flat_bottom(Vec2 p2, Vec2 p3, Vec2 c, uint32_t color) {
     }
 }
 
-void fill_flat_top(Vec2 p1, Vec2 p2 ,Vec2 c, uint32_t color) {
+void fill_flat_top(Vec3 p1, Vec3 p2 ,Vec3 c, uint32_t color) {
     float mi = (c.unpack.x - p1.unpack.x) / (c.unpack.y - p1.unpack.y);
     float mf = (c.unpack.x - p2.unpack.x) / (c.unpack.y - p2.unpack.y);
 

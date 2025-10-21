@@ -11,7 +11,7 @@ void draw_cuadrado(int x0, int y0, int largo, int altura, uint32_t color){
     draw_linea(x0, y1, x0, y0, color);
 }
 
-void fill_cuadro(Vec2 pos, int w, int h, uint32_t color, uint32_t contorno) {
+void fill_cuadro(Vec3 pos, int w, int h, uint32_t color, uint32_t contorno) {
     for(int y = pos.unpack.y ; y < pos.unpack.y + h ; y++) {
         draw_linea(pos.unpack.x, y, pos.unpack.x + w, y, color);
     }

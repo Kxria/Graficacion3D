@@ -34,10 +34,10 @@ typedef struct  _circulo {
 }Circulo;
 
 typedef struct _triangulo {
-    Vec2 p[3];
-    
+    Vec3 p[3];
     Color color;
     TypeFig type;
+    float avg_z;
 }Triangulo;
 
 typedef struct _linea {

@@ -12,7 +12,9 @@
 #define FPS 60
 #define FRAME_TARGET_TIME (1000/FPS)
 int frame_tiempo_prev = 0;
-int grabar = 0;
+// int puntos = 0;
+// int vertices = 0;
+// int relleno = 0;
 
 void render_init(void);
 void render_clean(void);
@@ -36,23 +38,50 @@ int main(int argc, char** argv) {
         while(SDL_PollEvent(&estadosrender.evento)) {            
             render_input();
 			
-            if(estadosrender.evento.type == SDL_EVENT_KEY_DOWN) {
-                if(estadosrender.evento.key.scancode == SDL_SCANCODE_1){
-                    grabar = 1;
-                }
-            }
+            // if(estadosrender.evento.type == SDL_EVENT_KEY_DOWN) {
+            //     if(estadosrender.evento.key.scancode == SDL_SCANCODE_1){
+            //         grabar = 1;
+            //     }
+            // }
+
+        //     if(estadosrender.evento.type ==  SDL_EVENT_KEY_DOWN) {
+        //         if(estadosrender.evento.key.scancode == SDL_SCANCODE_1) {
+        //             puntos = 1;
+        //             printf("Pintar puntos\n");
+        //         } else if(estadosrender.evento.key.scancode == SDL_SCANCODE_2) {
+        //             vertices = 1;
+        //             printf("Pintar vertices\n");
+        //         } else if(estadosrender.evento.key.scancode == SDL_SCANCODE_3) {
+        //             relleno = 1;
+        //             printf("Rellenar\n");
+        //         }
+        //     }
         }
         
         update();
-        if(grabar) {
-            grabar_imagen();
-            printf("Se grabo la imagen\n");
-            grabar = 0;
-        }
-			
+        
+        
+        // if(grabar) {
+        //     grabar_imagen();
+        //     printf("Se grabo la imagen\n");
+        //     grabar = 0;
+        // }
+        
         copy_buffer_to_texture();
         clear_color_buffer();
         render_frame();
+        // if(puntos) {
+        //     render_frame_menu(puntos, vertices, relleno);
+        //     puntos = 0;
+        // }
+        // if(vertices) {
+        //     render_frame_menu(puntos, vertices, relleno);
+        //     vertices = 0;
+        // }
+        // if(relleno) {
+        //     render_frame_menu(puntos, vertices, relleno);
+        //     relleno = 0;
+        // }
     }
 
     return 0;

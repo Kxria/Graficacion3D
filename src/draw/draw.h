@@ -23,9 +23,9 @@ void rellenar(Vec2 *start, uint32_t color);
 uint32_t getColor(Vec2 *pixel);
 
 // Relleno triangulo
-void fill_triangulo(Triangulo *triangulo, uint32_t color);
-void fill_flat_bottom(Vec2 p1,Vec2 p2, Vec2 p3, uint32_t color);
-void fill_flat_top(Vec2 p1,Vec2 p2, Vec2 p3, uint32_t color);
+// void fill_triangulo(Triangulo *triangulo, uint32_t color);
+void fill_flat_bottom(Vec3 p1,Vec3 p2, Vec3 p3, uint32_t color);
+void fill_flat_top(Vec3 p1,Vec3 p2, Vec3 p3, uint32_t color);
 void ordenar_y(Vec2 *y);
 
-void fill_cuadro(Vec2 pos, int w, int h, uint32_t color, uint32_t contorno);
+void fill_cuadro(Vec3 pos, int w, int h, uint32_t color, uint32_t contorno);

@@ -15,3 +15,46 @@ Vec3 vec4_to_vec3(Vec4 *p) {
                    p->unpack.z / w
                 }};
 }
+
+Vec3 cross_vec3(Vec3 p, Vec3 v) {
+    return (Vec3) {{
+        p.unpack.y * v.unpack.z - v.unpack.y * p.unpack.z,
+        p.unpack.z * v.unpack.x - v.unpack.x * p.unpack.z,
+        p.unpack.x * v.unpack.y - v.unpack.y * p.unpack.x
+    }};
+}
+
+Vec3 resta_vec3(Vec3 p, Vec3 v) {
+    return (Vec3){{
+        p.unpack.x - v.unpack.x,
+        p.unpack.y - v.unpack.y,
+        p.unpack.z - v.unpack.z
+    }};
+}
+
+float dot_vec3(Vec3 p, Vec3 v) {
+    return p.unpack.x * v.unpack.x +
+           p.unpack.y * v.unpack.y +
+           p.unpack.z * v.unpack.z;
+}
+
+float magnitud(Vec3 p) {
+    return sqrt(pow(p.unpack.x, 2) + pow(p.unpack.y, 2) + pow(p.unpack.z, 2));
+}
+
+Vec3 normalizar_vec3(Vec3 p) {
+    float mag = magnitud(p);
+
+    return (Vec3){{
+        p.unpack.x/mag,
+        p.unpack.y/mag,
+        p.unpack.z/mag
+    }};
+}
+void normalizar_vec3_inplace(Vec3 *p) {
+    float mag = magnitud(*p);
+
+    p->unpack.x /= mag;
+    p->unpack.y /= mag;
+    p->unpack.z /= mag;
+}

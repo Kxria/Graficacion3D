@@ -3,15 +3,15 @@
 #include "draw.h"
 
 void draw_linea(int x0, int y0, int x1, int y1, uint32_t color) {
-    #if LINEA_BRUTA
-        fuerza_bruta(x0, y0, x1, y1, color);
-    #elif LINEA_DDA
-        linea_dda(x0, y0, x1, y1, color);
-    #elif LINEA_BRM
-        linea_brhm(x0, y0, x1, y1, color);
-    #elif LINEA_ALIAS
+    // #if LINEA_BRUTA
+    //     fuerza_bruta(x0, y0, x1, y1, color);
+    // #elif LINEA_DDA
+    //     linea_dda(x0, y0, x1, y1, color);
+    // #elif LINEA_BRM
+        // linea_brhm(x0, y0, x1, y1, color);
+    // #elif LINEA_ALIAS
         linea_alias(x0, y0, x1, y1, color);
-    #endif
+    // #endif
 
 
 }
@@ -59,9 +59,9 @@ void linea_brhm(int x0, int y0, int x1, int y1, uint32_t color) {
     while(1) {
         draw_pixel(x, y, color);
 
+        int e2 = 2 * error;
         if(x == x1 && y == y1) break;
 
-        int e2 = 2 * error;
 
         if(e2 >= dy){
             error = error + dy;

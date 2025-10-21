@@ -1,4 +1,5 @@
 #include "matrix.h"
+#include <stdio.h>
 
 Mat4 mat4_eye(void) {
     Mat4 identidad;
@@ -105,4 +106,45 @@ Vec2 proyeccion_perspectiva(Vec3 punto, float fovf) {
 
     return p;
 
+}
+
+void print_matriz(Mat4 *m) {
+    for(int i = 0; i < 4 ; i++) {
+        for(int j = 0 ; j < 4 ; j++) {
+            char coma = (j < 3) ? ',' : '\0';
+            printf("%f%c", m->data[i*4+j], coma);
+        }
+        printf("\n");
+    }
+}
+
+Mat4 mat4_matriz_proyecion(float fov, float aspect, float znear, float zfar) {
+    //regresa la matriz de proyeccion
+    /*
+     * [(h/w)*1/tan(fov/2),     0       ,      0    ,         0        ]
+     * [       0          , 1/tan(fov/2),      0    ,         0        ]
+     * [       0          ,     0       , zf/(zf-zn), (-zf*zn)/(zf-zn) ]
+     * [       0          ,     0       ,      1    ,         0        ]
+     *
+     * aspect = (h/w) monitor normal o (w/h) celulares donde la altura es mayor a lo largo
+     */
+    Mat4 p = {0};
+    float inv_ang = 1/tan(fov/2);
+
+    p.data[0]  = aspect * inv_ang;
+    p.data[5]  = inv_ang;
+    p.data[10] = zfar/(zfar - znear);
+    p.data[11] = (-zfar * znear)/(zfar - znear);
+    p.data[14] = 1.f;
+    return p;
+}
+
+Vec4 proyeccion(Mat4 *mat, Vec4 p) {
+    Vec4 r = mat4_dot_vec4(mat, &p);
+    if(r.unpack.w != 0.0) {
+        r.unpack.x /= r.unpack.w;
+        r.unpack.y /= r.unpack.w;
+        r.unpack.z /= r.unpack.w;
+    }
+    return r;
 }

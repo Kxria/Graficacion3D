@@ -24,3 +24,7 @@ void mat4_push_proyeccion_perspectiva(Mat4 *matriz, float fovf);
 
 Vec2 proyeccion_ortografica(Vec3 punto, float fovf);
 Vec2 proyeccion_perspectiva(Vec3 punto, float fovf);
+
+void print_matriz(Mat4 *m);
+Mat4 mat4_matriz_proyecion(float fov, float aspect, float znear, float zfar);
+Vec4 proyeccion(Mat4 *mat, Vec4 p);
