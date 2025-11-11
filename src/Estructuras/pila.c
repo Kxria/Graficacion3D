@@ -1,32 +1,40 @@
+#include "pila.h"
+#include "../math/vectores.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "pila.h"
-
-void push(Pila *pila, void *vector) {
+void push(Pila *pila, void *vector){
     Nodo *aux = crearNodo(vector);
-
-    aux -> sig = pila -> tope;
-    pila -> tope = aux;
-    pila -> cantidad++;
+    
+    aux -> sig = pila -> cima;
+    pila -> cima = aux;
+    pila -> datos++;
 }
 
-void* pop(Pila *pila) {
-    Nodo *aux = pila->tope;
-    pila->tope = aux->sig;
-    void *dato = aux->dato;
+void* pop(Pila *pila){
+    if(pila){
+        Nodo *aux = pila -> cima;
 
-    free(aux);
-    pila->cantidad--;
-    return dato;
+		pila -> cima = aux -> sig;
+		aux -> sig = NULL;
+		void *dato = aux -> dato;
+
+		free(aux);
+		pila -> datos--;
+
+		return dato;
+    }
+    return NULL;
 }
 
-void freePila(Pila* pila) {
-    Nodo* aux;
+void freePila(Pila *pila){
+    Nodo *aux;
 
-    while (pila && pila->tope != NULL) {
-        aux = pila->tope;
-        pila->tope = aux->sig;
+    while (pila && pila->cima != NULL) {
+        aux = pila -> cima;
+        pila -> cima = aux -> sig;
+        
         free(aux);
     }
 }

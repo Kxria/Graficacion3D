@@ -17,15 +17,10 @@ void draw_linea(int x0, int y0, int x1, int y1, uint32_t color);
 void draw_linea_lerp(Vec2 p1, Vec2 p2, uint32_t color);
 void draw_curva(Vec2 p1, Vec2 p2, Vec2 p3, uint32_t color);
 
-// test
-void rellenar_figura(void *figura, uint32_t color);
-void rellenar(Vec2 *start, uint32_t color);
-uint32_t getColor(Vec2 *pixel);
-
 // Relleno triangulo
-// void fill_triangulo(Triangulo *triangulo, uint32_t color);
-void fill_flat_bottom(Vec3 p1,Vec3 p2, Vec3 p3, uint32_t color);
-void fill_flat_top(Vec3 p1,Vec3 p2, Vec3 p3, uint32_t color);
-void ordenar_y(Vec2 *y);
-
+void fill_triangulo(Triangulo *triangulo, uint32_t color);
+void fill_figura(void *figura, uint32_t fill_color);
+void fill_flood(Vec2 *pInicial, uint32_t fill_color);
 void fill_cuadro(Vec3 pos, int w, int h, uint32_t color, uint32_t contorno);
+
+uint32_t getColor(Vec2 *pixel);

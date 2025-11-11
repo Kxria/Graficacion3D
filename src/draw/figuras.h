@@ -4,7 +4,7 @@
 #include "../color/colores.h"
 
 typedef struct caras_indices {
-    int a, b, c;
+	int a, b, c;
 }Cara_t;
 
 typedef enum _tipos_fig {
@@ -34,10 +34,11 @@ typedef struct  _circulo {
 }Circulo;
 
 typedef struct _triangulo {
-    Vec3 p[3];
+    Vec3 pos[3];
     Color color;
     TypeFig type;
     float avg_z;
+    Vec3 normal;
 }Triangulo;
 
 typedef struct _linea {
@@ -71,3 +72,4 @@ typedef union  _figuras {
 }Figuras;
 
 void draw_figura(Figuras *fig);
+Vec3 normal_triangulo(Triangulo *trian);

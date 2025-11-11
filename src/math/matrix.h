@@ -1,5 +1,7 @@
 #pragma once
+
 #include "vectores.h"
+
 #include <math.h>
 
 typedef struct _mat4{
@@ -18,13 +20,13 @@ void mat4_push_rotar(Mat4 *matriz, Vec3 rotacion);
 
 Vec4 mat4_dot_vec4(Mat4 *matriz, Vec4 *punto);
 
-// proyeccion
+// Proyeccion
 void mat4_push_proyeccion_ortogonal(Mat4 *matriz, float fovf);
 void mat4_push_proyeccion_perspectiva(Mat4 *matriz, float fovf);
 
 Vec2 proyeccion_ortografica(Vec3 punto, float fovf);
 Vec2 proyeccion_perspectiva(Vec3 punto, float fovf);
-
-void print_matriz(Mat4 *m);
-Mat4 mat4_matriz_proyecion(float fov, float aspect, float znear, float zfar);
 Vec4 proyeccion(Mat4 *mat, Vec4 p);
+
+Mat4 mat4_matriz_proyeccion(float fov, float aspect, float znear, float zfar);
+

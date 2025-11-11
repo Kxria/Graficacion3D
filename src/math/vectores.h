@@ -19,23 +19,24 @@ typedef union _vec3{
     }unpack;
 }Vec3;
 
-typedef union _vec4 {
-    float data[4];
+typedef union _vec4{
+	float data[4];
 
-    struct {
-    
-        float x;
-        float y;
-        float z;
-        float w;
-    }unpack;
+	struct{
+		float x;
+		float y;
+		float z;
+		float w;
+	}unpack;
 }Vec4;
 
+float distanciav2(Vec2 p1, Vec2 p2);
 Vec3 vec4_to_vec3(Vec4 *p);
 Vec3 cross_vec3(Vec3 p, Vec3 v);
-float distanciav2(Vec2 p1, Vec2 p2);
 Vec3 resta_vec3(Vec3 p, Vec3 v);
+Vec3 escala_vec3(Vec3 *p, float s);
 float dot_vec3(Vec3 p, Vec3 v);
+
 float magnitud(Vec3 p);
 Vec3 normalizar_vec3(Vec3 p);
 void normalizar_vec3_inplace(Vec3 *p);

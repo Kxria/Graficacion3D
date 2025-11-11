@@ -2,11 +2,11 @@
 
 #include "nodo.h"
 
-typedef struct _pila{
-    Nodo *tope;
-    int cantidad;
+typedef struct  _pila{
+    Nodo *cima;
+    int datos;
 }Pila;
 
-void push(Pila *pila, void *vector);
 void* pop(Pila *pila);
-void freePila(Pila* pila);
+void push(Pila *pila, void *vector);
+void freePila(Pila *pila);

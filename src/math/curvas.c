@@ -3,6 +3,7 @@
 #include "../draw/draw.h"
 #include <stdint.h>
 
+//  Interpolacion lineal
 Vec2 lerpv2(Vec2 p1, Vec2 p2, float t){
     Vec2 vector;
 
@@ -12,6 +13,7 @@ Vec2 lerpv2(Vec2 p1, Vec2 p2, float t){
     return vector;
 }
 
+//  Interpolacion cuadratica
 Vec2 lerp2v2(Vec2 p1, Vec2 p2, Vec2 p3, float t){
     return lerpv2(lerpv2(p1, p2, t), lerpv2(p2, p3, t), t);
 }
@@ -24,3 +26,10 @@ void draw_curva(Vec2 p1, Vec2 p2, Vec2 p3, uint32_t color){
         draw_pixel(ctrlV.unpack.x, ctrlV.unpack.y, color);
     }
 }
+
+
+//              1
+//            1   1
+//         1    2   1
+//       1   3    3   1
+//     1   4    6   4   1
