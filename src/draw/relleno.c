@@ -7,11 +7,6 @@
 
 #include <stdlib.h>
 
-void fill_flat_bottom(Vec3 p1,Vec3 p2, Vec3 p3, uint32_t color);
-void fill_flat_top(Vec3 p1,Vec3 p2, Vec3 p3, uint32_t color);
-void ordenar_y(Vec3 *y);
-uint32_t getColor(Vec2 *pixel);
-
 void fill_figura(void *figura, uint32_t fill_color){
     Figuras *figuraCast = (Figuras*)figura;
     switch(figuraCast -> data.type){
@@ -106,9 +101,9 @@ void fill_triangulo(Triangulo *triangulo, uint32_t color){
     float cy, cx;
     Vec3 y[3];
 
-    y[0] = triangulo -> pos[0];
-    y[1] = triangulo -> pos[1];
-    y[2] = triangulo -> pos[2];
+    y[0] = vec4_to_vec3(&triangulo->pos[0]);
+    y[1] = vec4_to_vec3(&triangulo->pos[1]);
+    y[2] = vec4_to_vec3(&triangulo->pos[2]);
     ordenar_y(y);
 
     // Pintar

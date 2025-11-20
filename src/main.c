@@ -25,14 +25,11 @@ void grabar_imagen(void);
 //----------------- Visual Pointers ---------------//
 SDL_Window *window = NULL;
 
-int main(int argc, char** argv){
-    
+int main(int argc, char** argv) {
     render_init();
-    
     _Init();
-    
 
-    while(estadosrender.run){
+    while(estadosrender.run) {
         int delay_frame = FRAME_TARGET_TIME -(SDL_GetTicks()-frame_tiempo_prev);
         
         if(delay_frame > 0 && delay_frame <= FRAME_TARGET_TIME){
@@ -47,26 +44,27 @@ int main(int argc, char** argv){
                     grabar = 0;
                 }
             }
-	}
+	    }
         
             update();
-            if(grabar){
+            if(grabar) {
                 grabar_imagen();
                 printf("Se grabo la imagen\n");
                 grabar = 0;
             }
-            copy_buffer_to_texture();
-            clear_color_buffer();
-            render_frame();
 
-	    frame_tiempo_prev = delay_frame;
-        }
+        copy_buffer_to_texture();
+        clear_color_buffer();
+        clear_z_buffer();
+        render_frame();
+        frame_tiempo_prev = delay_frame;
+    }
+
     render_clean();
-
     return 0;
 }
 
-void render_init(void){
+void render_init(void) {
     SDL_CreateWindowAndRenderer("Window test", 
                                 estadosrender.w_width, 
                                 estadosrender.w_height, 
@@ -78,23 +76,26 @@ void render_init(void){
     assert(estadosrender.renderer && "No se creó el render...\n");
 
     estadosrender.color_buffer = malloc(estadosrender.w_width * estadosrender.w_height * sizeof(uint32_t));
-    assert(estadosrender.color_buffer && "No se creó el color buffer...\n");
+    estadosrender.z_buffer = calloc(estadosrender.w_width * estadosrender.w_height, sizeof(float));
 
-    estadosrender.texture = SDL_CreateTexture(estadosrender.renderer, 
+    assert(estadosrender.color_buffer && "No se creó el color buffer...\n");
+    assert(estadosrender.z_buffer && "No se creó el z-buffer...\n");
+
+    estadosrender.textura = SDL_CreateTexture(estadosrender.renderer, 
                                               SDL_PIXELFORMAT_RGBA8888, 
                                               SDL_TEXTUREACCESS_STREAMING, 
                                               estadosrender.w_width, 
                                               estadosrender.w_height);
-    assert(estadosrender.texture && "No se creó la textura...\n");
+    assert(estadosrender.textura && "No se creó la textura...\n");
 }
 
 void render_clean(void){
     free_array(estadosrender.meshes);
-    //free(estadosrender.figuras_buffer);
-    SDL_DestroyTexture(estadosrender.texture);
+    SDL_DestroyTexture(estadosrender.textura);
     SDL_DestroyRenderer(estadosrender.renderer);
     SDL_DestroyWindow(window);
     free(estadosrender.color_buffer);
+    free(estadosrender.z_buffer);
 }
 
 void grabar_imagen(void){

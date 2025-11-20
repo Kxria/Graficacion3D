@@ -1,5 +1,6 @@
 #pragma once
 
+#include "../global.h"
 #include "../math/vectores.h"
 #include "linea.h"
 #include "figuras.h"
@@ -18,9 +19,27 @@ void draw_linea_lerp(Vec2 p1, Vec2 p2, uint32_t color);
 void draw_curva(Vec2 p1, Vec2 p2, Vec2 p3, uint32_t color);
 
 // Relleno triangulo
+void fill_trian(Vec4 p1, Vec4 p2, Vec4 p3, uint32_t color);
+void draw_trian_pixel(int x, int y, uint32_t color, Vec4 p1, Vec4 p2, Vec4 p3);
+
 void fill_triangulo(Triangulo *triangulo, uint32_t color);
 void fill_figura(void *figura, uint32_t fill_color);
 void fill_flood(Vec2 *pInicial, uint32_t fill_color);
 void fill_cuadro(Vec3 pos, int w, int h, uint32_t color, uint32_t contorno);
 
+void fill_flat_bottom(Vec3 p1,Vec3 p2, Vec3 p3, uint32_t color);
+void fill_flat_top(Vec3 p1,Vec3 p2, Vec3 p3, uint32_t color);
+void ordenar_y(Vec3 *y);
 uint32_t getColor(Vec2 *pixel);
+
+Vec3 barycentric_pesos(Vec3 a, Vec3 b, Vec3 c, Vec3 p);
+void tex_trian(Vec4 p1, TexturaUV tuv1,
+               Vec4 p2, TexturaUV tuv2,
+               Vec4 p3, TexturaUV tuv3,
+               uint32_t *textura, int tw, int th);
+void draw_textura(int x, int y,
+                  Vec4 a, Vec4 b, Vec4 c,
+                  TexturaUV t1, TexturaUV t2, TexturaUV t3,
+                  uint32_t *textura, int tw, int th);
+void swap(Vec3 *p1, Vec3 *p2);
+void swapv4(Vec4 *a, Vec4 *b);

@@ -17,20 +17,19 @@ Color lerp_color(Color a, Color b, float t) {
 
 uint32_t *cargar_imagen(const char *path, int *x, int *y, int *c, int n) {
     unsigned char *data = stbi_load(path, x, y, c, n);
-
-    if(!data) {
-        fprintf(stderr, "Error al cargar la imagen\n");
+    if (!data) {
+        fprintf(stderr, "error al cargar la imagen\n");
         return 0;
     }
 
     uint32_t *img = (uint32_t*)data;
 
-    if(*c == 3) {
-        for(int i = 0; i < *x * *y;i++) {
-            uint8_t r = img[i * 4 + 0];
-            uint8_t g = img[i * 4 + 1];
-            uint8_t b = img[i * 4 + 2];
-            uint8_t a = 0xFF;
+    if (*c == 3 && n == 4) {
+        for (int i = 0; i < *x * *y; ++i) {
+            uint8_t a = (img[i] & 0xFF000000) >> 24;
+            uint8_t b = (img[i] & 0x00FF0000) >> 16;
+            uint8_t g = (img[i] & 0x0000FF00) >> 8;
+            uint8_t r = (img[i] & 0x000000FF);
 
             img[i] = ARGB_TO_RGBA(r, g, b, a);
         }
