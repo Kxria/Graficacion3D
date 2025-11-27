@@ -188,7 +188,7 @@ void _Init() {
 	camara.unpack.z = -5.f;
 
 	// Cargar mesh
-	Mesh cubo = loadMesh("assets/crab.obj", VERTICES | INDICES);
+	Mesh cubo = loadMesh("assets/crab.obj", VERTICES | INDICES | UV);
 
 	pushto_array(estadosrender.meshes, cubo);
 
@@ -203,7 +203,7 @@ void _Init() {
 	estadosrender.meshes[0].traslado.unpack.z = 5.f;
 
 	int imgx, imgy, imgcomp;
-	// estadosrender.meshes[0].textura.pixeles = cargar_imagen("assets/crab.png", &imgx, &imgy, &imgcomp, 4);
+	estadosrender.meshes[0].textura.pixeles = cargar_imagen("assets/crab.png", &imgx, &imgy, &imgcomp, 4);
 	printf("(%d, %d, %d)\n", imgx, imgy, imgcomp);
 
 	estadosrender.meshes[0].textura.width = imgx;

@@ -24,7 +24,8 @@ uint32_t *cargar_imagen(const char *path, int *x, int *y, int *c, int n) {
 
     uint32_t *img = (uint32_t*)data;
 
-    if (*c == 3 && n == 4) {
+    // if (*c == 3 && n == 4) 
+    {
         for (int i = 0; i < *x * *y; ++i) {
             uint8_t a = (img[i] & 0xFF000000) >> 24;
             uint8_t b = (img[i] & 0x00FF0000) >> 16;
