@@ -2,7 +2,7 @@
 #include <stdint.h>
 
 uint32_t luz_intensidad(uint32_t color, float porcentaje){ 
-	if (porcentaje < 0) porcentaje = 0.f;
+	if (porcentaje < 0) porcentaje = 0.2f;
 	if (porcentaje > 1) porcentaje = 1.f;
 
 	// Extraer colores

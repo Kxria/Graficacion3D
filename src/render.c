@@ -30,7 +30,8 @@ int texFlag = 0;
 
 const int fovf = 630;
 
-Luz luz = {{{0.f, 0.f, 1.f}}};
+Luz luz = {{{      0.f,      0.f,        -1.f}}};
+			// +iqz -der | +dwn -up | +frt -bck
 
 // ANADIDO
 uint32_t *img = 0;
