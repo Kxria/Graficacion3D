@@ -37,13 +37,6 @@ uint32_t *img = 0;
 
 Vec2 *punto_seleccionado = NULL;
 
-// int comparar(const void *a, const void *b) {
-// 	Triangulo *A = (Triangulo*)a;
-// 	Triangulo *B = (Triangulo*)b;
-
-// 	return A -> avg_z - B -> avg_z;
-// }
-
 void transformar(void) {
 	for(int m = 0; m < array_size(estadosrender.meshes); ++m) {
 		free_array(estadosrender.meshes[m].triangulos);
@@ -81,10 +74,6 @@ void transformar(void) {
 			int mostrar = back_face_culling(camara, vertices_transformados);
 			if(!mostrar && backFaceCullingFlag)
 				continue;
-
-			// float avg_z = (vertices_transformados[0].unpack.z + 
-			// 	       vertices_transformados[1].unpack.z +
-			// 	       vertices_transformados[2].unpack.z) / 3.f;
 
 			triangulo_proyectado.pos[0] = vertices_transformados[0];
 			triangulo_proyectado.pos[1] = vertices_transformados[1];
@@ -127,11 +116,6 @@ void transformar(void) {
 			triangulo_proyectado.texuv[2] = estadosrender.meshes[m].indices[i].c_uv;
 			pushto_array(estadosrender.meshes[m].triangulos, triangulo_proyectado);
 		}
-		// Painters algorithm ordenar por promedio por profundidad
-		// qsort(estadosrender.meshes[m].triangulos, 
-		// 	array_size(estadosrender.meshes[m].triangulos), 
-		// 	sizeof(estadosrender.meshes[m].triangulos[0]), 
-		// 	comparar);
 	}
 }
 
@@ -186,34 +170,60 @@ void copy_buffer_to_texture(void) {
 
 void _Init() {
 	camara.unpack.z = -5.f;
+	//////////////////////////////////////////
+	// cargar mesh de la maya de perspectiva
+	Mesh mesh = loadMesh("assets/mesh.obj", VERTICES | INDICES | UV);
+	pushto_array(estadosrender.meshes, mesh);
 
-	// Cargar mesh
-	Mesh cubo = loadMesh("assets/crab.obj", VERTICES | INDICES | UV);
-
+	// Cargar mesh del cubo
+	Mesh cubo = loadMesh("assets/cube.obj", VERTICES | INDICES | UV);
 	pushto_array(estadosrender.meshes, cubo);
 
+	// Configurar plano de perspectiva (meshes[0])
 	estadosrender.meshes[0].rotacion.unpack.x = 0.f;
 	estadosrender.meshes[0].rotacion.unpack.y = 0.f;
 	estadosrender.meshes[0].rotacion.unpack.z = 0.f;
 
-	estadosrender.meshes[0].escala.unpack.x = 1.f;
-	estadosrender.meshes[0].escala.unpack.y = 1.f;
-	estadosrender.meshes[0].escala.unpack.z = 1.f; 
+	estadosrender.meshes[0].escala.unpack.x = 3.f;
+	estadosrender.meshes[0].escala.unpack.y = 3.f;
+	estadosrender.meshes[0].escala.unpack.z = 3.f; 
 	
+	estadosrender.meshes[0].traslado.unpack.x = 0.f;
+	estadosrender.meshes[0].traslado.unpack.y = -1.5f;
 	estadosrender.meshes[0].traslado.unpack.z = 5.f;
 
-	int imgx, imgy, imgcomp;
-	estadosrender.meshes[0].textura.pixeles = cargar_imagen("assets/crab.png", &imgx, &imgy, &imgcomp, 4);
-	printf("(%d, %d, %d)\n", imgx, imgy, imgcomp);
+	// Cargar textura del mesh de perspectiva
+	int mesh_imgx, mesh_imgy, mesh_imgcomp;
+	estadosrender.meshes[0].textura.pixeles = cargar_imagen("assets/mesh.png", &mesh_imgx, &mesh_imgy, &mesh_imgcomp, 4);
+	printf("Piso: (%d, %d, %d)\n", mesh_imgx, mesh_imgy, mesh_imgcomp);
 
-	estadosrender.meshes[0].textura.width = imgx;
-	estadosrender.meshes[0].textura.height = imgy;
+	estadosrender.meshes[0].textura.width = mesh_imgx;
+	estadosrender.meshes[0].textura.height = mesh_imgy;
+
+	// Configurar cubo (meshes[1])
+	estadosrender.meshes[1].rotacion.unpack.x = 0.f;
+	estadosrender.meshes[1].rotacion.unpack.y = 0.f;
+	estadosrender.meshes[1].rotacion.unpack.z = 0.f;
+
+	estadosrender.meshes[1].escala.unpack.x = 1.f;
+	estadosrender.meshes[1].escala.unpack.y = 1.f;
+	estadosrender.meshes[1].escala.unpack.z = 1.f; 
+	
+	estadosrender.meshes[1].traslado.unpack.z = 5.f;
+
+	int imgx, imgy, imgcomp;
+	estadosrender.meshes[1].textura.pixeles = cargar_imagen("assets/cubo_tex/ladrillo.png", &imgx, &imgy, &imgcomp, 4);
+	printf("Objeto: (%d, %d, %d)\n", imgx, imgy, imgcomp);
+
+	estadosrender.meshes[1].textura.width = imgx;
+	estadosrender.meshes[1].textura.height = imgy;
 }
 
 void update() {
-	estadosrender.meshes[0].rotacion.unpack.x += 0.002f;
-	estadosrender.meshes[0].rotacion.unpack.y += 0.002f;
-	estadosrender.meshes[0].rotacion.unpack.z += 0.002f;
+	// rotacion del cubo
+	estadosrender.meshes[1].rotacion.unpack.x += 0.002f;
+	estadosrender.meshes[1].rotacion.unpack.y += 0.002f;
+	estadosrender.meshes[1].rotacion.unpack.z += 0.002f;
 
 	transformar();
 }
