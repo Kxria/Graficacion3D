@@ -1,6 +1,7 @@
 #include "draw.h"
 #include "linea.h"
 #include "../color/textura.h"
+#include "../estructuras/luz.h"
 #include <stdlib.h>
 
 void draw_trian(int x0, int y0, int x1, int y1, int x2, int y2, uint32_t color) {
@@ -43,7 +44,7 @@ Vec3 barycentric_pesos(Vec3 a, Vec3 b, Vec3 c, Vec3 p) {
 void draw_textura(	int x, int y, 
 					Vec4 a, Vec4 b, Vec4 c, 
 					TexturaUV t1, TexturaUV t2, TexturaUV t3, 
-					uint32_t* textura, int tw, int th) {
+					uint32_t* textura, int tw, int th, float intensidad_luz) {
 	
 	Vec3 p = {{x, y, 1.f}};
 	Vec3 pesos = barycentric_pesos(
@@ -68,7 +69,10 @@ void draw_textura(	int x, int y,
 
 	iinvW = 1.f - iinvW;
 		if(iinvW < estadosrender.z_buffer[estadosrender.w_width * y + x]) {
-			draw_pixel(x, y, textura[tw * texIDY + texIDX]);
+			// Aplicar la intensidad de luz al color de la textura
+			uint32_t color_textura = textura[tw * texIDY + texIDX];
+			uint32_t color_con_luz = luz_intensidad(color_textura, intensidad_luz);
+			draw_pixel(x, y, color_con_luz);
 			estadosrender.z_buffer[estadosrender.w_width * y + x] = iinvW;
 		}
 }
@@ -76,7 +80,7 @@ void draw_textura(	int x, int y,
 void tex_trian(	Vec4 p1, TexturaUV tuv1,
 				Vec4 p2, TexturaUV tuv2,
 				Vec4 p3, TexturaUV tuv3,
-				uint32_t *textura, int tw, int th) {
+				uint32_t *textura, int tw, int th, float intensidad_luz) {
 	// Oredenamos los vertices tal que p1 < p2 < p3
 	if(p1.unpack.y > p2.unpack.y) {
 		swapv4(&p1, &p2);
@@ -119,7 +123,7 @@ void tex_trian(	Vec4 p1, TexturaUV tuv1,
 			}
 
 			for(int x = xin; x < xen; x++) {
-				draw_textura(x, y, p1, p2, p3, tuv1, tuv2, tuv3, textura, tw, th);
+				draw_textura(x, y, p1, p2, p3, tuv1, tuv2, tuv3, textura, tw, th, intensidad_luz);
 			}
 		}
 	}
@@ -146,7 +150,7 @@ void tex_trian(	Vec4 p1, TexturaUV tuv1,
 			}
 
 			for(int x = xin; x < xen; x++) {
-				draw_textura(x, y, p1, p2, p3, tuv1, tuv2, tuv3, textura, tw, th);
+				draw_textura(x, y, p1, p2, p3, tuv1, tuv2, tuv3, textura, tw, th, intensidad_luz);
 			}
 		}
 	}

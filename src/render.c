@@ -30,8 +30,8 @@ int texFlag = 0;
 
 const int fovf = 630;
 
-Luz luz = {{{      0.f,      0.f,        -1.f}}};
-			// +iqz -der | +dwn -up | +frt -bck
+Luz luz = {{{      0.f,      1.f,        1.f}}};
+			// +iqz -der | +up -dwn | +frt -bck
 
 // ANADIDO
 uint32_t *img = 0;
@@ -125,18 +125,22 @@ void render_input(void) {
         estadosrender.run = 0;
     }
 
+	// Aristas
     if(estadosrender.evento.type == SDL_EVENT_KEY_DOWN && estadosrender.evento.key.scancode == SDL_SCANCODE_1) {
 	dotsFlag = !dotsFlag;
     }
 
+	// Vertices
     if(estadosrender.evento.type == SDL_EVENT_KEY_DOWN && estadosrender.evento.key.scancode == SDL_SCANCODE_2) {
 	vertexFlag = !vertexFlag;
     }
 
+	// Relleno
     if(estadosrender.evento.type == SDL_EVENT_KEY_DOWN && estadosrender.evento.key.scancode == SDL_SCANCODE_3) {
 	fillFlag = !fillFlag;
     }
 
+	// Textura
     if(estadosrender.evento.type == SDL_EVENT_KEY_DOWN && estadosrender.evento.key.scancode == SDL_SCANCODE_4) {
 	texFlag = !texFlag;
     }
@@ -247,12 +251,15 @@ void render_frame() {
 			
 			// Textura de los triangulos
 			if(texFlag) {
+				// Calcular intensidad de luz para este triángulo
+				float intesidad = -dot_vec3(trian.normal, luz.direccion);
 				tex_trian(  trian.pos[0], trian.texuv[0],
 							trian.pos[1], trian.texuv[1],
 							trian.pos[2], trian.texuv[2],
 							estadosrender.meshes[m].textura.pixeles,
 							estadosrender.meshes[m].textura.width,
-							estadosrender.meshes[m].textura.height);
+							estadosrender.meshes[m].textura.height,
+							intesidad);
 			}
 
 			// Aristas de los triangulos
